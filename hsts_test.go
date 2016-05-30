@@ -26,7 +26,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme": []string{req.URL.Scheme},
+						"scheme": {req.URL.Scheme},
 					},
 				}, nil
 			},
@@ -34,7 +34,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme": []string{"http"},
+					"scheme": {"http"},
 				},
 			},
 		},
@@ -44,8 +44,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme":                    []string{req.URL.Scheme},
-						"Strict-Transport-Security": []string{"max-age=10000"},
+						"scheme":                    {req.URL.Scheme},
+						"Strict-Transport-Security": {"max-age=10000"},
 					},
 				}, nil
 			},
@@ -53,8 +53,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme":                    []string{"http"},
-					"Strict-Transport-Security": []string{"max-age=10000"},
+					"scheme":                    {"http"},
+					"Strict-Transport-Security": {"max-age=10000"},
 				},
 			},
 		},
@@ -64,7 +64,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme": []string{req.URL.Scheme},
+						"scheme": {req.URL.Scheme},
 					},
 				}, nil
 			},
@@ -72,7 +72,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme": []string{"http"},
+					"scheme": {"http"},
 				},
 			},
 		},
@@ -82,8 +82,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme":                    []string{req.URL.Scheme},
-						"Strict-Transport-Security": []string{"max-age=10000"},
+						"scheme":                    {req.URL.Scheme},
+						"Strict-Transport-Security": {"max-age=10000"},
 					},
 				}, nil
 			},
@@ -91,8 +91,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme":                    []string{"https"},
-					"Strict-Transport-Security": []string{"max-age=10000"},
+					"scheme":                    {"https"},
+					"Strict-Transport-Security": {"max-age=10000"},
 				},
 			},
 		},
@@ -102,7 +102,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme": []string{req.URL.Scheme},
+						"scheme": {req.URL.Scheme},
 					},
 				}, nil
 			},
@@ -115,8 +115,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme":                    []string{req.URL.Scheme},
-						"Strict-Transport-Security": []string{"max-age=0"},
+						"scheme":                    {req.URL.Scheme},
+						"Strict-Transport-Security": {"max-age=0"},
 					},
 				}, nil
 			},
@@ -124,8 +124,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme":                    []string{"https"},
-					"Strict-Transport-Security": []string{"max-age=0"},
+					"scheme":                    {"https"},
+					"Strict-Transport-Security": {"max-age=0"},
 				},
 			},
 		},
@@ -135,7 +135,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme": []string{req.URL.Scheme},
+						"scheme": {req.URL.Scheme},
 					},
 				}, nil
 			},
@@ -143,7 +143,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme": []string{"http"},
+					"scheme": {"http"},
 				},
 			},
 		},
@@ -153,8 +153,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 				return &http.Response{
 					StatusCode: 200,
 					Header: map[string][]string{
-						"scheme":                    []string{req.URL.Scheme},
-						"Strict-Transport-Security": []string{"max-age=10000"},
+						"scheme":                    {req.URL.Scheme},
+						"Strict-Transport-Security": {"max-age=10000"},
 					},
 				}, nil
 			},
@@ -162,8 +162,8 @@ func TestTransport_RoundTrip(t *testing.T) {
 			expected: &http.Response{
 				StatusCode: 200,
 				Header: map[string][]string{
-					"scheme":                    []string{"https"},
-					"Strict-Transport-Security": []string{"max-age=10000"},
+					"scheme":                    {"https"},
+					"Strict-Transport-Security": {"max-age=10000"},
 				},
 			},
 		},
