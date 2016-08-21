@@ -13,6 +13,7 @@ func TestTransport_RoundTrip(t *testing.T) {
 	}
 
 	expRedirect, _ := redirect("https://example.com/index.html", newRequest("http://example.com/index.html"))
+	expSubDomainRedirect, _ := redirect("https://foo.example.com/index.html", newRequest("http://foo.example.com/index.html"))
 
 	tests := []struct {
 		name     string
@@ -146,6 +147,39 @@ func TestTransport_RoundTrip(t *testing.T) {
 					"scheme": {"http"},
 				},
 			},
+		},
+		{
+			name: "set hsts header for subdomains verification",
+			server: func(req *http.Request) (*http.Response, error) {
+				return &http.Response{
+					StatusCode: 200,
+					Header: map[string][]string{
+						"scheme":                    {req.URL.Scheme},
+						"Strict-Transport-Security": {"includeSubDomains"},
+					},
+				}, nil
+			},
+			req: newRequest("https://example.com/index.html"),
+			expected: &http.Response{
+				StatusCode: 200,
+				Header: map[string][]string{
+					"scheme":                    {"https"},
+					"Strict-Transport-Security": {"includeSubDomains"},
+				},
+			},
+		},
+		{
+			name: "verify hsts header for subdomains",
+			server: func(req *http.Request) (*http.Response, error) {
+				return &http.Response{
+					StatusCode: 200,
+					Header: map[string][]string{
+						"scheme": {req.URL.Scheme},
+					},
+				}, nil
+			},
+			req:      newRequest("http://foo.example.com/index.html"),
+			expected: expSubDomainRedirect,
 		},
 		{
 			name: "set hsts header for max-age verification",

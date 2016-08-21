@@ -61,7 +61,7 @@ func (t *Transport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 func parseHeader(h string) (subdomains bool, maxAge int64) {
-	subdomains = strings.Contains(h, "includeSubdomains")
+	subdomains = strings.Contains(h, "includeSubDomains")
 	maxAge = 10
 
 	for _, v := range strings.Split(h, ";") {
