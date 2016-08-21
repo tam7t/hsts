@@ -1,6 +1,7 @@
 package hsts
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -39,8 +40,10 @@ func TestMemStorage_Contains(t *testing.T) {
 	})
 
 	done := make(chan bool)
+
+	var orgErr error
 	go func() {
-		orgTest(m, t)
+		orgErr = orgTest(m, t)
 		// try to make a data race
 		m.Add(&Domain{
 			Host:       "example.org",
@@ -52,8 +55,9 @@ func TestMemStorage_Contains(t *testing.T) {
 		done <- true
 	}()
 
+	var comErr error
 	go func() {
-		comTest(m, t)
+		comErr = comTest(m, t)
 		// try to make a data race
 		m.Add(&Domain{
 			Host:       "a.example.com",
@@ -68,9 +72,17 @@ func TestMemStorage_Contains(t *testing.T) {
 	// wait for tests to finish
 	<-done
 	<-done
+
+	if orgErr != nil {
+		t.Fatal(orgErr)
+	}
+
+	if comErr != nil {
+		t.Fatal(comErr)
+	}
 }
 
-func orgTest(m *MemStorage, t *testing.T) {
+func orgTest(m *MemStorage, t *testing.T) error {
 	tests := []struct {
 		name     string
 		host     string
@@ -99,12 +111,14 @@ func orgTest(m *MemStorage, t *testing.T) {
 			t.Logf("host: %s", test.host)
 			t.Logf("want:%v", test.expected)
 			t.Logf("got:%v", out)
-			t.Fatalf("test case failed: %s", test.name)
+			return fmt.Errorf("test case failed: %s", test.name)
 		}
 	}
+
+	return nil
 }
 
-func comTest(m *MemStorage, t *testing.T) {
+func comTest(m *MemStorage, t *testing.T) error {
 	tests := []struct {
 		name     string
 		host     string
@@ -143,9 +157,11 @@ func comTest(m *MemStorage, t *testing.T) {
 			t.Logf("host: %s", test.host)
 			t.Logf("want:%v", test.expected)
 			t.Logf("got:%v", out)
-			t.Fatalf("test case failed: %s", test.name)
+			return fmt.Errorf("test case failed: %s", test.name)
 		}
 	}
+
+	return nil
 }
 
 func TestMemStorage_Add(t *testing.T) {
