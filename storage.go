@@ -30,7 +30,7 @@ func (hs *MemStorage) Contains(h string) bool {
 	}
 
 	// is h a subdomain of an hsts domain, walk the domain to see if it is a sub
-	// sub ... sub domain of a domain that has the `includeSubdomains` rule
+	// sub ... sub domain of a domain that has the `includeSubDomains` rule
 	l := len(h)
 	originalHost := h
 	for l > 0 {
